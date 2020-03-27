@@ -3,20 +3,23 @@ Class = require 'class'
 lume = require 'lume'
 Line = require 'line'
 
--- TODO 使用 Class 导致不能同时存在两个turtle
-local initLine = Line()
 local turtle =
     Class {
-    position = vector.zero,
-    movedDist = 0,
-    targetDist = 0,
-    lineQueue = { initLine },
-    lastLineIndex = 1,
-    curLineIndex = 1,
+    position,
+    movedDist,
+    targetDist,
+    lineQueue,
+    lastLineIndex,
+    curLineIndex,
 }
 
 function turtle:init()
-
+    self.position = vector.zero
+    self.movedDist = 0
+    self.targetDist = 0
+    self.lineQueue = { Line() }
+    self.lastLineIndex = 1
+    self.curLineIndex = 1
 end
 
 function turtle:curLine()
@@ -53,6 +56,8 @@ function turtle:draw()
     self:curLine():draw(self.position.x, self.position.y)
     -- love.graphics.line(self:curLine().v1.x, self:curLine().v1.y, self.position.x, self.position.y)
 end
+
+-- 打印所有线段的起始终止点
 function turtle:info()
     for k, v in ipairs(self.lineQueue) do
         print(k, v.v1, v.v2)

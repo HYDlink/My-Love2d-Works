@@ -1,4 +1,4 @@
-turtle = require 'OnlyOneTurtle'
+local turtle = require 'OnlyOneTurtle'
 lume = require 'lume'
 
 local unpack = unpack or table.unpack
@@ -57,3 +57,4 @@ end
 -- f = io.open('input.txt', 'r')
 -- s = f:read('a')
 -- turtle.LoadAll(s)
+return turtle

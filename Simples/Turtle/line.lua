@@ -38,6 +38,7 @@ function Line:init(v1, v2, width, color, vel, dir)
 end
 
 function Line:draw(x, y)
+    love.graphics.setLineStyle('smooth')
     love.graphics.setLineWidth(self.width)
     love.graphics.setColor(self.color)
     x1,y1,x2,y2 = self.v1.x, self.v1.y, x or self.v2.x, y or self.v2.y
