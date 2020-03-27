@@ -1,17 +1,18 @@
-local turtle = require 'OnlyOneTurtle'
-lume = require 'lume'
-
+local Turtle = require 'BetterTurtle'
+local RunTurtle = Class()
 local unpack = unpack or table.unpack
 
+--[[
 local funcTable = {
-    forward = turtle.forward,
-    left = turtle.left,
-    right = turtle.right,
-    setpos = turtle.setPos,
-    setvel = turtle.setVel,
-    setwidth = turtle.setWidth,
-    setcolor = turtle.setColor,
+    forward = Turtle.forward,
+    left = Turtle.left,
+    right = Turtle.right,
+    setpos = Turtle.setPos,
+    setvel = Turtle.setVel,
+    setwidth = Turtle.setWidth,
+    setcolor = Turtle.setColor,
 }
+--]]
 
 function string.lines(s)
     local function iter(str, index)
@@ -30,7 +31,15 @@ function string.lines(s)
     return iter, s, init
 end
 
-function turtle.LoadOne(str)
+-- 绑定要执行的 turtle
+function RunTurtle:init(turtle)
+    if turtle == nil then
+        error('Need to bind a turtle')
+    end
+    self.turtle = turtle
+end
+
+function RunTurtle:LoadOne(str)
     -- comment
     if str[1] == '#' then
         return
@@ -42,19 +51,19 @@ function turtle.LoadOne(str)
         params[#params + 1] = tonumber(i)
     end
     print(funcName, lume.serialize(params))
-
-    assert(funcTable)
-    funcTable[funcName](unpack(params))
+    -- 直接调用 turtle 里面的名为 funcname 的函数, 
+    -- 因此把 BetterTurtle 的函数名 都改成了小写
+    self.turtle[funcName](self.turtle, unpack(params))
 end
 
-function turtle.LoadAll(s)
+function RunTurtle:LoadAll(s)
     for _, str in s:lines() do
-        turtle.LoadOne(str)
+        self:LoadOne(str)
     end
-    turtle.info()
+    self.turtle:info()
 end
 
 -- f = io.open('input.txt', 'r')
 -- s = f:read('a')
 -- turtle.LoadAll(s)
-return turtle
+return RunTurtle

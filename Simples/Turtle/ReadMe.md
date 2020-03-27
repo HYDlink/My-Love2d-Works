@@ -3,7 +3,23 @@
 一个用游戏更新思维制作的海龟绘图程序, 思路还挺蠢的, 都不记得一些细节了
 现在觉得可以重构一些东西, 但又没动力, 真正使用肯定是用 py 的 turtle..
 
+可以写脚本之后执行, 使用方式, 假设当前文件夹就在这里
+`love . <filename>`
+比如 `love . input.txt`
+
+示例脚本 `input.txt`
+
 ## Turtle 类型
+
+支持的动作
+- `setpos` - 设置当前笔尖的位置
+- `setvel` - 设置绘制下次线段时 笔移动的速度
+- `right` - 向右转向 90 度
+- `left` - 向左转向 90 度
+- `rotate` - 逆时针转向
+- `forward` - 向前绘制指定距离
+- `setwidth` - 设置下次画线的线段宽度
+- `setcolor` - 设置下次画线的选段颜色
 
 ### [turtle](turtle.lua)
 
@@ -47,13 +63,12 @@
 
 `update` 的思路和上面一样, 检查当前移动了的距离, 然后进行下一次画线
 
-### [OnlyOneTurtle](OnlyOneTurtle.lua)
-
-顾名思义.., 就是单纯的取消了 OOP 实例化
 
 ## 语法解析并执行 [RunTurtle](RunTurtle.lua)
 
-目前是使用 OnlyOneTurtle 创造的, 那个时候还不是很懂 lua 的 OOP
+思路: 获取一个 turtle 作为引用, 调用 `LoadOne` 将会解析一个 函数表达式, 然后通过 turtle 调用获取到的函数名以及参数, 以脚本的方式添加 turtle 的执行语句
+
+`init(turtle)` 获取一个 `turtle` 作为引用, 必需
 
 `LoadOne(str)`
 解析函数语句 `<func>(<numberparam>[, <paramn> ...])`

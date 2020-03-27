@@ -64,20 +64,29 @@ function turtle:info()
     end
 end
 
-function turtle:setPos(x, y)
+function turtle:setpos(x, y)
     if self.lastLineIndex == 1 then self.position = vector(x, y) end
     self.lineQueue[self.lastLineIndex].v1 = vector(x, y)
 end
-function turtle:setVel(vel)
+function turtle:setvel(vel)
     self.lineQueue[self.lastLineIndex].vel = vel
 end
-function turtle:left(angle)
+function turtle:setwidth(width)
+    self.lineQueue[self.lastLineIndex].width = width
+end
+function turtle:setcolor(r, g, b)
+    self.lineQueue[self.lastLineIndex].color = { r, g, b }
+end
+
+function turtle:rotate(angle)
     local angle = angle or (math.pi / 2)
     self:lastLine().dir = self:lastLine().dir:rotated(angle)
 end
+function turtle:left(angle)
+    self:rotate(angle)
+end
 function turtle:right(angle)
-    local angle = angle or (math.pi / 2)
-    self:lastLine().dir = self:lastLine().dir:rotated(-angle)
+    self:rotate(-angle)
 end
 function turtle:forward(dist)
     -- assert(dist and type(dist) == 'number')
